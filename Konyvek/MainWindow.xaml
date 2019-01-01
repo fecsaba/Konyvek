@@ -1,0 +1,154 @@
+﻿<Window x:Class="Konyvek.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Konyvek"
+        mc:Ignorable="d"
+        Title="Könyvek" Height="450" Width="800" FontSize="16">
+    <Window.Resources>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Margin" Value="5 10 25 0"/>
+            <Setter Property="Padding" Value="25 10 25 10"/>
+        </Style>
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="FontWeight" Value="ExtraBlack"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Content="Könyv lapozó"
+               HorizontalAlignment="Center"
+               FontSize="40"
+               FontWeight="Black"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="479*"/>
+                <ColumnDefinition Width="auto"/>
+
+            </Grid.ColumnDefinitions>
+            <DataGrid x:Name="DgrKonyvLista"
+                      IsReadOnly="True"
+                      AutoGenerateColumns="False"
+                      ItemsSource="{Binding}"
+                      SelectionChanged="DgrKonyvLista_SelectionChanged">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Cím"  
+                                    Binding="{Binding Sorszam}"/>
+                    <DataGridTextColumn Header="Lapok száma"  
+                                    Binding="{Binding OldalakSzama}"/>
+
+                </DataGrid.Columns>
+
+
+            </DataGrid>
+            <StackPanel Grid.Column="2"
+                        VerticalAlignment="Center">
+                <Button x:Name="BtnKinyit"
+                        Content="Kinyit"
+                        IsEnabled="False"
+                        Click="Kinyit_Click">
+                    
+                </Button>
+                <Button x:Name="BtnBecsuk"
+                        Content="Becsuk"
+                        IsEnabled="False"
+                        Click="Becsuk_Click">
+
+                </Button>
+                <Button x:Name="BtnEloreLapoz"
+                        Content=" ----->"
+                        IsEnabled="False"
+                        Click="EloreLapoz_Click">
+
+                </Button>
+                <Button x:Name="BtnHatraLapoz"
+                        Content="&lt;-----"
+                        IsEnabled="False"
+                        Click="HatraLapoz_Click">
+
+                </Button>
+                <Button x:Name="BtnPorget"
+                        Content="Pörget"
+                        IsEnabled="False"
+                        Click="Porget_Click">
+
+                </Button>
+                <Button x:Name="BtnClose"
+                        Content="Bezár"
+                        Click="Close_Click">
+
+                </Button>
+            </StackPanel>
+            <Border x:Name="BrdrCsukottKonyv"
+                    Visibility="Collapsed"
+                    Grid.Column="1"
+                    Width="250"
+                    Margin="20"
+                    Background="Chartreuse"
+                    BorderBrush="Green"
+                    BorderThickness="3">
+                <StackPanel>
+                    <Label Content="Cím:"
+                           />
+                    <Label Content="{Binding Sorszam}"
+                           DataContext="{Binding ElementName=DgrKonyvLista, Path=SelectedItem}"
+                           x:Name="LblCim"
+                           Margin="0 30"
+                           FontSize="100"/>
+
+                </StackPanel>
+            </Border>
+            <Border x:Name="BrdrNyitottKonyv"
+                    Visibility="Collapsed"
+                    Grid.Column="1"
+                    
+                    Margin="10 40 10 40 "
+                    Background="White"
+                    BorderBrush="Green"
+                    BorderThickness="3">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="3"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <Label Content="{Binding Sorszam}" 
+                               DataContext="{Binding ElementName=DgrKonyvLista, Path=SelectedItem}"
+                               FontSize="16"/>
+                        <Rectangle Fill="Black"
+                                   Height="1"/>
+                        <Label Content="{Binding AktualisOldal}"
+                           DataContext="{Binding ElementName=DgrKonyvLista, Path=SelectedItem}"
+                           x:Name="LblAktOldal"
+                           Margin="0 30"
+                           FontSize="100"/>
+                        
+                    </StackPanel>
+                    <Rectangle Grid.Column="1"
+                          Fill="Black"/>
+                    <StackPanel Grid.Column="2">
+                        <Label Content="{Binding Sorszam}" 
+                               DataContext="{Binding ElementName=DgrKonyvLista, Path=SelectedItem}"
+                               FontSize="16"/>
+                        <Rectangle Fill="Black"
+                                   Height="1"/>
+                        <Label Content="{Binding KovetkezoOldal}"
+                           DataContext="{Binding ElementName=DgrKonyvLista, Path=SelectedItem}"
+                           x:Name="LblKovOldal"
+                           Margin="0 30"
+                           FontSize="100"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+                    
+        </Grid>
+    </Grid>
+</Window>
